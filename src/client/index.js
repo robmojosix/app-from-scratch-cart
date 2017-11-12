@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 
 const Component = () => (
   <h2>from component</h2>
@@ -7,8 +7,8 @@ const Component = () => (
 
 ReactDOM.render(
   <div>
-    <h1>Hello, world!</h1>
+    <h1>react stuff</h1>
     <Component />
   </div>,
-  document.getElementById('root')
+  document.getElementById('App')
 );

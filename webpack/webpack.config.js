@@ -1,13 +1,14 @@
+const babelOptions = require('../babelrc');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
-module.exports = {
+export default {
   context: path.resolve(__dirname),
   entry: {
-    main: './src/index.js'
+    main: '../src/client/index.js'
   },
   output: {
-    path: path.resolve(__dirname, 'build', 'client'),
+    path: path.resolve(process.cwd(), 'build', 'client'),
     filename: '[name].js',
   },
   resolve: {
@@ -18,8 +19,11 @@ module.exports = {
       {
          test: /\.js$/,
          exclude: /node_modules/,
-         loaders: ['babel-loader']
+         use: {
+           loader: 'babel-loader',
+           options: babelOptions
+         }
       }
-     ]
+    ]
   }
 };
