@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "development": "NODE_PATH=./src NODE_ENV=development node utilities/babel-register --run src/server/server.js",
-    "build": "node utilities/babel-register --run webpack/build.js"
+    "development": "NODE_PATH=./src NODE_ENV=development node babel/babel-register --run src/server/server.js",
+    "production": "NODE_PATH=./src NODE_ENV=production node babel/babel-register --run src/server/server.js",
+    "build": "node babel/babel-register --run webpack/build.js"
   },
   "author": "",
   "license": "ISC",
