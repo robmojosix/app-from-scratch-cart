@@ -1,16 +1,14 @@
-import http    from 'http';
+import http from 'http';
 import express from 'express';
-import path    from 'path';
-const templateFile = path.join(process.cwd(), 'src/server/template.ejs');
+import path from 'path';
+import { renderDevPage } from './ssr/render';
+import { PROD } from '../../utilities';
 
-const PROD = process.env.NODE_ENV === 'production';
 const PORT = PROD ? 8080 : 3000;
 const app = express();
 
 app.use(express.static('build/client'));
-app.get('/', (req, res) => {
-  res.status(200).render(templateFile);
-});
+app.get('/', renderDevPage);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

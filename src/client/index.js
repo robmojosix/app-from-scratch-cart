@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Component = () => (
-  <h2>from component</h2>
-);
+import Component from './component'l
 
 ReactDOM.render(
   <div>

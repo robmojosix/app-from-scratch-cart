@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 export default {
-  context: path.resolve(__dirname),
+  context: process.cwd(),
   entry: {
     main: '../src/client/index.js'
   },
