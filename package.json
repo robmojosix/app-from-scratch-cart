@@ -6,7 +6,8 @@
   "scripts": {
     "development": "NODE_PATH=./src NODE_ENV=development node babel/babel-register --run src/server/server.js",
     "production": "NODE_PATH=./src NODE_ENV=production node babel/babel-register --run src/server/server.js",
-    "build": "node babel/babel-register --run webpack/build.js"
+    "build": "node babel/babel-register --run webpack/build.js",
+    "start": "npm run build && npm run development"
   },
   "author": "",
   "license": "ISC",
