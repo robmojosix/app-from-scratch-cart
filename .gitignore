@@ -2,3 +2,4 @@
 node_modules
 todo.txt
 build
+npm-debug.log
