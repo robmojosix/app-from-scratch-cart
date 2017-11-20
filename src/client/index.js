@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import Component from './component'l
+import Component from "./component";
 
 ReactDOM.render(
-  <div>
-    <h1>react stuff</h1>
-    <Component />
-  </div>,
-  document.getElementById('App')
+	<div>
+		<h1>react stuff</h1>
+		<Component />
+	</div>,
+	document.getElementById("App")
 );
