@@ -1,6 +1,11 @@
 import webpack from "webpack";
 import babelOptions from "../babelrc";
 import path from "path";
+import ExtractTextPlugin from "extract-text-webpack-plugin";
+import UglifyJSPlugin from "uglifyjs-webpack-plugin";
+import autoprefixer from "autoprefixer";
+import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import cssNano from "cssnano";
 import { PROD, PRERENDER } from "../utilities";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -11,7 +16,18 @@ const entry = ["./src/client/index.js"]
 const plugins = []
 	.concat(PROD ? [
 		new webpack.NoEmitOnErrorsPlugin(),
-		new webpack.optimize.OccurrenceOrderPlugin()
+		new webpack.optimize.OccurrenceOrderPlugin(),
+		new UglifyJSPlugin(),
+		new ExtractTextPlugin({
+			filename: "styles.css",
+			allChunks: true,
+		}),
+		new OptimizeCssAssetsPlugin({
+			assetNameRegExp: /\.css$/g,
+			cssProcessor: cssNano,
+			cssProcessorOptions: { discardComments: { removeAll: true } },
+			canPrint: true,
+		})
 	] : [
 		new webpack.HotModuleReplacementPlugin()
 	])
@@ -22,6 +38,28 @@ const plugins = []
 			template: "./src/server/static-render/template.ejs"
 		})
 	] : []);
+
+const cssLoaders = [
+	{
+		loader: "css-loader",
+	}, {
+		loader: "postcss-loader",
+		options: {
+			sourceMap: true,
+			plugins: [autoprefixer],
+		},
+	}, {
+		loader: "resolve-url-loader",
+	}, {
+		loader: "sass-loader",
+		options: {
+			includePaths: [
+				path.resolve(process.cwd(), "node_modules"),
+				path.resolve(process.cwd(), "src/client"),
+			],
+		},
+	},
+];
 
 export default {
 	context: process.cwd(),
@@ -43,6 +81,15 @@ export default {
 					loader: "babel-loader",
 					options: babelOptions
 				}
+			},
+			{
+				test: /\.scss$/,
+				use: PROD
+					? ExtractTextPlugin.extract({
+						fallback: "style-loader",
+						use: cssLoaders,
+					})
+					: [{ loader: "style-loader" }].concat(cssLoaders),
 			}
 		]
 	},
