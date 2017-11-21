@@ -3,7 +3,7 @@ import http from "http";
 import express from "express";
 import { argv } from "optimist";
 import { renderDevPage } from "./ssr/render";
-import { PROD } from "../../../utilities";
+import { PROD, PRERENDER } from "../../../utilities";
 
 const PORT = PROD ? 8080 : 3000;
 
@@ -17,7 +17,9 @@ export default new class Server {
 
 	start() {
 		this.app.use(express.static("build/client"));
-		this.app.get("/", renderDevPage);
+		if(!PRERENDER) {
+			this.app.get("/", renderDevPage);
+		}
 
 		// catch 404 and forward to error handler
 		this.app.use((req, res, next) => {

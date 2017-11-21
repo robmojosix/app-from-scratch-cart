@@ -7,6 +7,7 @@
     "development": "NODE_PATH=./src node babel/babel-register --run src/server/dev-server.js",
     "production": "NODE_PATH=./src node babel/babel-register --run src/server/src/server.js --autostart",
     "build": "node babel/babel-register --run webpack/build.js",
+    "prerender": "NODE_ENV=production PRERENDER=true node babel/babel-register --run webpack/build.js && npm run production",
     "start-dev": "NODE_ENV=development npm run build && npm run development",
     "start-prod": "NODE_ENV=production npm run build && npm run production",
     "lint": "eslint ."
@@ -27,6 +28,7 @@
     "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "fs-extra": "^4.0.2",
+    "html-webpack-plugin": "^2.30.1",
     "http-server": "^0.10.0",
     "react-transform-hmr": "^1.0.4",
     "webpack": "^3.8.1"

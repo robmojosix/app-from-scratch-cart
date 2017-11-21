@@ -1,7 +1,9 @@
 import webpack from "webpack";
 import babelOptions from "../babelrc";
 import path from "path";
-import { PROD } from "../utilities";
+import { PROD, PRERENDER } from "../utilities";
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = ["./src/client/index.js"]
 	.concat(PROD ? [] : ["webpack-hot-middleware/client"]);
@@ -12,7 +14,14 @@ const plugins = []
 		new webpack.optimize.OccurrenceOrderPlugin()
 	] : [
 		new webpack.HotModuleReplacementPlugin()
-	]);
+	])
+  .concat(PRERENDER ? [
+    new HtmlWebpackPlugin({
+			title: 'Static Rendered Page',
+			filename: 'index.html',
+    	template: './src/server/static-render/template.ejs'
+		})
+  ] : []);
 
 export default {
 	context: process.cwd(),
@@ -22,7 +31,6 @@ export default {
 		filename: "[name].js",
 		publicPath: "/"
 	},
-	plugins,
 	resolve: {
 		extensions: [".js", ".scss"]
 	},
@@ -37,5 +45,6 @@ export default {
 				}
 			}
 		]
-	}
+	},
+	plugins
 };
