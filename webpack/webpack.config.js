@@ -58,7 +58,7 @@ const cssLoaders = [
 				path.resolve(process.cwd(), "src/client"),
 			],
 		},
-	},
+	}
 ];
 
 export default {
@@ -90,6 +90,15 @@ export default {
 						use: cssLoaders,
 					})
 					: [{ loader: "style-loader" }].concat(cssLoaders),
+			},
+			{
+				test: /\.(png|jpg|gif)$/,
+				use: [
+					{
+						loader: "file-loader",
+						options: {}
+					}
+				]
 			}
 		]
 	},

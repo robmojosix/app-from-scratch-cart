@@ -14,6 +14,7 @@ const compiler = webpack(config);
 
 // Do "hot-reloading" throw away the cached modules and let them be re-required next time
 compiler.plugin("done", function() {
+	console.log("clearing");
 	clearModule.match(new RegExp(`^${rootFolder}`, "i"));
 });
 
