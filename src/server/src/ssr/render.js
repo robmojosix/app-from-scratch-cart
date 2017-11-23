@@ -1,9 +1,9 @@
 import React from "react";
 import { renderToString } from "react-dom/server";
 
-import Template from "./template.js";
-
 const renderApp = (req, res) => {
+	// dynamic require to enable hotreloading
+	const Template = require("./template.js").default;
 	const html = renderToString(
 		<Template title='title' />
 	);

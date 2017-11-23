@@ -1,34 +1,20 @@
 /* eslint-disable no-console, no-useless-escape */
 import webpack from "webpack";
-import chokidar from "chokidar";
+import path from "path";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
+import clearModule from "clear-module";
 import config from "../../webpack/webpack.config";
 import server from "./src/server";
 
-// Do "hot-reloading" of express stuff on the server
-// Throw away cached modules and re-require next time
-// Ensure there's no important state in there!
-const watcher = chokidar.watch("./src");
-
-watcher.on("ready", function() {
-	watcher.on("all", function() {
-		console.log("Clearing /server/ module cache from server");
-		Object.keys(require.cache).forEach(function(id) {
-			if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
-		});
-	});
-});
+const projectDirectory = process.cwd();
+const rootFolder = path.resolve(projectDirectory, "src");
 
 const compiler = webpack(config);
 
-// Do "hot-reloading" of react stuff on the server
-// Throw away the cached client modules and let them be re-required next time
+// Do "hot-reloading" throw away the cached modules and let them be re-required next time
 compiler.plugin("done", function() {
-	console.log("Clearing /client/ module cache from server");
-	Object.keys(require.cache).forEach(function(id) {
-		if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
-	});
+	clearModule.match(new RegExp(`^${rootFolder}`, "i"));
 });
 
 // Compile with webpack & bind middleware for hot-reloading

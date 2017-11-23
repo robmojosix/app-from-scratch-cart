@@ -7,6 +7,7 @@ import { PROD, PRERENDER } from "../../../utilities";
 
 const PORT = PROD ? 8080 : 3000;
 
+
 export default new class Server {
 	constructor() {
 		this.app = express();
