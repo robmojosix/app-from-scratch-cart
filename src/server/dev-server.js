@@ -29,9 +29,11 @@ const reloadMiddleware = (server) => ((req, res, next) => {
 });
 
 webpackDevMiddlewareInstance.waitUntilValid(() => {
-	server.use(webpackDevMiddlewareInstance);
-	server.use(webpackHotMiddlewareInstance);
-	server.useHotReload(reloadMiddleware);
+	server.app.use(webpackDevMiddlewareInstance);
+	server.app.use(webpackHotMiddlewareInstance);
+	server.app.use((req, res, next) => {
+			reloadMiddleware(server.app)(req, res, next);
+	});
 
 	server.start();
 });

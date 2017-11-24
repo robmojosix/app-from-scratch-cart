@@ -51,15 +51,4 @@ export default new class Server {
 		});
 	}
 
-	// add cutom middlewares
-	use(...middlewareOptions) {
-		this.app.use(...middlewareOptions);
-	}
-
-	// add dev serevr hot reload middlewares
-	useHotReload(hotReloadMiddleware) {
-		this.app.use((req, res, next) => {
-			hotReloadMiddleware(this.app)(req, res, next);
-		});
-	}
 }();
