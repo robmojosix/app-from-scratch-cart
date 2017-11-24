@@ -32,7 +32,7 @@ webpackDevMiddlewareInstance.waitUntilValid(() => {
 	server.app.use(webpackDevMiddlewareInstance);
 	server.app.use(webpackHotMiddlewareInstance);
 	server.app.use((req, res, next) => {
-			reloadMiddleware(server.app)(req, res, next);
+		reloadMiddleware(server.app)(req, res, next);
 	});
 
 	server.start();
