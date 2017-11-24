@@ -13,6 +13,7 @@ class Template extends React.Component {
 				<head>
 					<meta charSet="utf-8"/>
 					<title>{title}</title>
+					<link rel="stylesheet" type="text/css" href="styles.css" />
 				</head>
 				<body>
 					<h1>Server render</h1>

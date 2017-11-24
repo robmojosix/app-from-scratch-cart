@@ -4,13 +4,45 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "development": "NODE_PATH=./src node babel/babel-register --run src/server/dev-server.js",
-    "production": "NODE_PATH=./src node babel/babel-register --run src/server/src/server.js --autostart",
-    "build": "node babel/babel-register --run webpack/build.js",
-    "prerender": "NODE_ENV=production PRERENDER=true node babel/babel-register --run webpack/build.js && NODE_ENV=production npm run production",
-    "start-dev": "NODE_ENV=development npm run build && NODE_ENV=development npm run development",
-    "start-prod": "NODE_ENV=production npm run build && NODE_ENV=production npm run production",
+    "prod": "bnr prod-build && bnr prod-server",
+    "dev": "bnr dev-build && bnr dev-server",
+    "prerender": "bnr prerender-build && bnr prod-server",
     "lint": "eslint ."
+  },
+  "betterScripts": {
+    "prerender-build": {
+      "command": "node babel/babel-register --run webpack/build.js",
+      "env": {
+        "NODE_ENV": "production",
+        "PRERENDER": "true"
+      }
+    },
+    "prod-build": {
+      "command": "node babel/babel-register --run webpack/build.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "prod-server": {
+      "command": "node babel/babel-register --run src/server/src/server.js --autostart",
+      "env": {
+        "NODE_ENV": "production",
+        "NODE_PATH": "./src"
+      }
+    },
+    "dev-build": {
+      "command": "node babel/babel-register --run webpack/build.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "dev-server": {
+      "command": "node babel/babel-register --run src/server/dev-server.js",
+      "env": {
+        "NODE_ENV": "development",
+        "NODE_PATH": "./src"
+      }
+    }
   },
   "pre-commit": [
     "lint"
@@ -24,6 +56,7 @@
     "babel-plugin-inline-react-svg": "^0.5.2",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "better-npm-run": "^0.1.0",
     "eslint": "^4.11.0",
     "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^3.0.2",
