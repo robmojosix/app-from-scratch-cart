@@ -2,11 +2,9 @@
 import http from "http";
 import express from "express";
 import { argv } from "optimist";
-import { renderDevPage } from "./ssr/render";
-import { PROD, PRERENDER } from "../../../utilities";
+import { PROD, PRERENDER, serverRendererPath } from "../../../utilities";
 
 const PORT = PROD ? 8080 : 3000;
-
 
 export default new class Server {
 	constructor() {
@@ -18,8 +16,11 @@ export default new class Server {
 
 	start() {
 		this.app.use(express.static("build/client"));
+		this.app.renderDevPage = require(serverRendererPath).renderDevPage;
 		if(!PRERENDER) {
-			this.app.get("/", renderDevPage);
+			this.app.get("/", (req, res) => {
+				this.app.renderDevPage(req, res);
+			});
 		}
 
 		// catch 404 and forward to error handler
@@ -50,7 +51,15 @@ export default new class Server {
 		});
 	}
 
+	// add cutom middlewares
 	use(...middlewareOptions) {
 		this.app.use(...middlewareOptions);
+	}
+
+	// add dev serevr hot reload middlewares
+	useHotReload(hotReloadMiddleware) {
+		this.app.use((req, res, next) => {
+			hotReloadMiddleware(this.app)(req, res, next);
+		});
 	}
 }();

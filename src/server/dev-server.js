@@ -1,34 +1,37 @@
 /* eslint-disable no-console, no-useless-escape */
 import webpack from "webpack";
-import path from "path";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import clearModule from "clear-module";
 import config from "../../webpack/webpack.config";
-import server from "./src/server";
-
-const projectDirectory = process.cwd();
-const rootFolder = path.resolve(projectDirectory, "src");
+import { serverRendererPath, clientFolder } from "../../utilities";
 
 const compiler = webpack(config);
 
-// Do "hot-reloading" throw away the cached modules and let them be re-required next time
-compiler.plugin("done", function() {
-	console.log("clearing");
-	clearModule.match(new RegExp(`^${rootFolder}`, "i"));
-});
+// Use our own server
+const server = require("./src/server").default;
 
-// Compile with webpack & bind middleware for hot-reloading
 const webpackDevMiddlewareInstance = webpackDevMiddleware(
 	compiler,
-	{ noInfo: true, publicPath: config.output.publicPath }
-);
+	{ noInfo: true, publicPath: "/" });
 
 const webpackHotMiddlewareInstance = webpackHotMiddleware(compiler);
+
+const reloadMiddleware = (server) => ((req, res, next) => {
+	// Remove Client App from cache (cheap server-side Hot-Reload)
+	// NOTE: We need to explicitly clear all the modules in the client directory.
+	// It's a nice to have. Not guaranteed to always work, take it with a grain of salt.
+	clearModule.match(new RegExp(`^${clientFolder}`, "i"));
+
+	// eslint-disable-next-line import/no-dynamic-require, global-require
+	server.renderDevPage = require(serverRendererPath).renderDevPage;
+	next();
+});
 
 webpackDevMiddlewareInstance.waitUntilValid(() => {
 	server.use(webpackDevMiddlewareInstance);
 	server.use(webpackHotMiddlewareInstance);
+	server.useHotReload(reloadMiddleware);
 
 	server.start();
 });

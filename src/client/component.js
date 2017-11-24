@@ -5,7 +5,7 @@ import Svg from "./svg.svg";
 
 const Component = () => (
 	<div>
-		<h2 className="component">from component 3</h2>
+		<h2 className="component">from component</h2>
 		<img src={img} />
 		<Svg />
 	</div>
