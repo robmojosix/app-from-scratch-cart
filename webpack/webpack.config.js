@@ -42,6 +42,12 @@ const plugins = []
 const cssLoaders = [
 	{
 		loader: "css-loader",
+		options: {
+			modules: true,
+			localIdentName: PROD
+				? "[hash:base64]"
+				: "[path][name]__[local]"
+		}
 	}, {
 		loader: "postcss-loader",
 		options: {
