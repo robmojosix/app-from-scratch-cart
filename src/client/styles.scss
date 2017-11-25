@@ -1,3 +1,23 @@
+@import 'utils/index';
+
 .component {
   color: red;
+}
+
+@include breakpoint(mobile) {
+  .component {
+    color: blue;
+  }
+}
+
+@include breakpoint(tablet) {
+  .component {
+    color: yellow;
+  }
+}
+
+@include breakpoint(desktop) {
+  .component {
+    color: green;
+  }
 }
