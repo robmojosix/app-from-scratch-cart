@@ -61,7 +61,7 @@ const cssLoaders = [
 		options: {
 			includePaths: [
 				path.resolve(process.cwd(), "node_modules"),
-				path.resolve(process.cwd(), "src/client"),
+				path.resolve(process.cwd(), "src/client")
 			],
 		},
 	}
