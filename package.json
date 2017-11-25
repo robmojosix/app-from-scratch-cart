@@ -51,6 +51,7 @@
   "license": "ISC",
   "devDependencies": {
     "asset-require-hook": "^1.2.0",
+    "assets-webpack-plugin": "^3.5.1",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-inline-react-svg": "^0.5.2",

@@ -1,13 +1,11 @@
 import React from "react";
-import { string } from "prop-types";
+import { string, object } from "prop-types";
 import App from "../../../client/universal";
 import { PROD } from "../../../../utilities";
 
 class Template extends React.Component {
 	render() {
-		const {
-			title
-		} = this.props;
+		const { title, assets } = this.props;
 
 		return (
 			<html>
@@ -15,7 +13,7 @@ class Template extends React.Component {
 					<meta charSet="utf-8"/>
 					<title>{title}</title>
 					<If condition={ PROD }>
-						<link rel="stylesheet" type="text/css" href="styles.css" />
+						<link rel="stylesheet" type="text/css" href={assets.main.css} />
 					</If>
 				</head>
 				<body>
@@ -23,7 +21,7 @@ class Template extends React.Component {
 					<div id="App">
 						<App />
 					</div>
-					<script src="/main.js"></script>
+					<script src={assets.main.js}></script>
 				</body>
 			</html>
 		);
@@ -32,6 +30,7 @@ class Template extends React.Component {
 
 Template.propTypes = {
 	title: string.isRequired,
+	assets: object.isRequired,
 };
 
 export default Template;

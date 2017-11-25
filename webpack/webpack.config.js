@@ -2,6 +2,7 @@ import webpack from "webpack";
 import babelOptions from "../babelrc";
 import path from "path";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
+import AssetsPlugin from "assets-webpack-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import autoprefixer from "autoprefixer";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
@@ -13,13 +14,18 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const entry = ["./src/client/index.js"]
 	.concat(PROD ? [] : ["webpack-hot-middleware/client"]);
 
-const plugins = []
+const plugins = [
+	new AssetsPlugin({
+		path: "build",
+		filename: "manifest.json"
+	})
+]
 	.concat(PROD ? [
 		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new UglifyJSPlugin(),
 		new ExtractTextPlugin({
-			filename: "styles.css",
+			filename: "[hash].css",
 			allChunks: true,
 		}),
 		new OptimizeCssAssetsPlugin({
@@ -72,7 +78,7 @@ export default {
 	entry,
 	output: {
 		path: path.resolve("build", "client"),
-		filename: "[name].js",
+		filename: "[hash].js",
 		publicPath: "/"
 	},
 	resolve: {
