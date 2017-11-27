@@ -21,6 +21,8 @@ class Template extends React.Component {
 					<div id="App">
 						<App />
 					</div>
+					<script src={assets.vendor.js}></script>
+					<script src={assets.utils.js}></script>
 					<script src={assets.main.js}></script>
 				</body>
 			</html>

@@ -11,13 +11,22 @@ import { PROD, PRERENDER } from "../utilities";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const entry = ["./src/client/index.js"]
+const mainEntry = ["./src/client/index.js"]
 	.concat(PROD ? [] : ["webpack-hot-middleware/client"]);
+
+const entry = {
+	vendor: ["react", "react-dom"],
+	utils: ["./src/client/utils/index.js"],
+	main: mainEntry
+};
 
 const plugins = [
 	new AssetsPlugin({
 		path: "build",
 		filename: "manifest.json"
+	}),
+	new webpack.optimize.CommonsChunkPlugin({
+		name: "vendor"
 	})
 ]
 	.concat(PROD ? [
@@ -25,7 +34,7 @@ const plugins = [
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new UglifyJSPlugin(),
 		new ExtractTextPlugin({
-			filename: "[hash].css",
+			filename: "[hash].[name].css",
 			allChunks: true,
 		}),
 		new OptimizeCssAssetsPlugin({
@@ -35,6 +44,7 @@ const plugins = [
 			canPrint: true,
 		})
 	] : [
+		new webpack.NamedModulesPlugin(),
 		new webpack.HotModuleReplacementPlugin()
 	])
 	.concat(PRERENDER ? [
@@ -78,7 +88,7 @@ export default {
 	entry,
 	output: {
 		path: path.resolve("build", "client"),
-		filename: "[hash].js",
+		filename: "[hash].[name].js",
 		publicPath: "/"
 	},
 	resolve: {
