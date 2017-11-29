@@ -7,9 +7,13 @@ import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import autoprefixer from "autoprefixer";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import cssNano from "cssnano";
-import { PROD, PRERENDER } from "../utilities";
+import { PROD, PRERENDER, cssChunkNaming, includePaths } from "../utilities";
+
+import { renderTemplateStatic } from "../src/server/src/ssr/render";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const prerenderedApp = renderTemplateStatic();
 
 const mainEntry = ["./src/client/index.js"]
 	.concat(PROD ? [] : ["webpack-hot-middleware/client"]);
@@ -51,6 +55,7 @@ const plugins = [
 		new HtmlWebpackPlugin({
 			title: "Static Rendered Page",
 			filename: "index.html",
+			app: prerenderedApp,
 			template: "./src/server/static-render/template.ejs"
 		})
 	] : []);
@@ -61,7 +66,7 @@ const cssLoaders = [
 		options: {
 			modules: true,
 			localIdentName: PROD
-				? "[hash:base64]"
+				? cssChunkNaming
 				: "[path][name]__[local]"
 		}
 	}, {
@@ -75,10 +80,7 @@ const cssLoaders = [
 	}, {
 		loader: "sass-loader",
 		options: {
-			includePaths: [
-				path.resolve(process.cwd(), "node_modules"),
-				path.resolve(process.cwd(), "src/client")
-			],
+			includePaths,
 		},
 	}
 ];

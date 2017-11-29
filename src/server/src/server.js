@@ -16,10 +16,10 @@ export default new class Server {
 
 	start() {
 		this.app.use(express.static("build/client"));
-		this.app.renderDevPage = require(serverRendererPath).renderDevPage;
+		this.app.renderTemplate = require(serverRendererPath).renderTemplate;
 		if(!PRERENDER) {
 			this.app.get("/", (req, res) => {
-				this.app.renderDevPage(req, res);
+				this.app.renderTemplate(req, res);
 			});
 		}
 

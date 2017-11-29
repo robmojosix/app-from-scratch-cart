@@ -24,7 +24,7 @@ const reloadMiddleware = (server) => ((req, res, next) => {
 	clearModule.match(new RegExp(`^${clientFolder}`, "i"));
 
 	// eslint-disable-next-line import/no-dynamic-require, global-require
-	server.renderDevPage = require(serverRendererPath).renderDevPage;
+	server.renderTemplate = require(serverRendererPath).renderTemplate;
 	next();
 });
 
