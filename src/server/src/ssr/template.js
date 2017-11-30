@@ -1,11 +1,10 @@
 import React from "react";
 import { string, object } from "prop-types";
-import App from "../../../client/universal";
 import { PROD } from "../../../../utilities";
 
 class Template extends React.Component {
 	render() {
-		const { title, assets } = this.props;
+		const { title, assets, route } = this.props;
 
 		return (
 			<html>
@@ -19,7 +18,7 @@ class Template extends React.Component {
 				<body>
 					<h1>Server render</h1>
 					<div id="App">
-						<App />
+						{route}
 					</div>
 					<script src={assets.vendor.js}></script>
 					<script src={assets.utils.js}></script>

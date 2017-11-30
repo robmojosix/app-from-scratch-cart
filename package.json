@@ -6,7 +6,7 @@
   "scripts": {
     "prod": "bnr prod-build && bnr prod-server",
     "dev": "bnr dev-build && bnr dev-server",
-    "prerender": "bnr prerender-build && bnr prod-server",
+    "prerender": "bnr prerender-build && bnr prerender-server",
     "lint": "eslint ."
   },
   "betterScripts": {
@@ -14,6 +14,14 @@
       "command": "node babel/babel-register --run webpack/build.js",
       "env": {
         "NODE_ENV": "production",
+        "PRERENDER": "true"
+      }
+    },
+    "prerender-server": {
+      "command": "node babel/babel-register --run src/server/src/server.js --autostart",
+      "env": {
+        "NODE_ENV": "production",
+        "NODE_PATH": "./src",
         "PRERENDER": "true"
       }
     },
@@ -89,6 +97,7 @@
     "raw-loader": "^0.5.1",
     "react": "^16.0.0",
     "react-dom": "^16.1.0",
+    "react-router-dom": "^4.2.2",
     "resolve-url-loader": "^2.2.0",
     "sass-loader": "^6.0.6",
     "save": "^2.3.1",

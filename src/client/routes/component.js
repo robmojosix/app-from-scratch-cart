@@ -1,7 +1,7 @@
 import React from "react";
-import img from "./logo.png";
-import Svg from "./svg.svg";
-import styles from "./styles.scss";
+import img from "../logo.png";
+import Svg from "../svg.svg";
+import styles from "../styles.scss";
 
 const Component = () => (
 	<div>
