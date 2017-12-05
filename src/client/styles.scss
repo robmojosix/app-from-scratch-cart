@@ -5,6 +5,11 @@
   color: red;
 }
 
+.svg, .img {
+  width: 30px;
+  height: 30px;
+}
+
 @include breakpoint(mobile) {
   .component {
     color: blue;
