@@ -13,7 +13,7 @@ import { renderTemplateStatic } from "../src/server/src/ssr/render";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const prerenderedApp = renderTemplateStatic('/');
+const prerenderedApp = renderTemplateStatic("/");
 
 const mainEntry = ["./src/client/index.js"]
 	.concat(PROD ? [] : ["webpack-hot-middleware/client"]);
