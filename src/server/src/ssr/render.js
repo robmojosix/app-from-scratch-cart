@@ -1,7 +1,7 @@
 import React from "react";
 import path from "path";
 import { renderToString } from "react-dom/server";
-import App from "../../../client/universal";
+import App from "../../../client/staticTemplate";
 
 import StaticRouter from "react-router-dom/StaticRouter";
 import { renderRoutes } from "react-router-config";
@@ -32,9 +32,9 @@ const renderTemplateHtml = (req) => {
 	);
 };
 
-const renderAppHtml = () => {
+const renderAppHtml = (url) => {
 	return renderToString(
-		<App />
+		<App url={url}/>
 	);
 };
 
@@ -44,6 +44,6 @@ export const renderTemplate = (req, res) => {
 };
 
 // static prerender
-export const renderTemplateStatic = () => {
-	return renderAppHtml();
+export const renderTemplateStatic = (url) => {
+	return renderAppHtml(url);
 };

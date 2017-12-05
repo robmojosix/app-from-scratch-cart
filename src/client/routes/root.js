@@ -3,7 +3,7 @@ import { renderRoutes } from "react-router-config";
 
 const Component = (props) => (
 	<div>
-		{"Root Level"}
+		{"NAVIGATION LAYER"}
 		{renderRoutes(props.route.routes)}
 	</div>
 );
