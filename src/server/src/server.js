@@ -18,7 +18,6 @@ export default new class Server {
 		this.app.use(express.static("build/client"));
 		this.app.renderTemplate = require(serverRendererPath).renderTemplate;
 		if(!PRERENDER) {
-			console.log("efkebfkabfb");
 			this.app.get("*", (req, res) => {
 				this.app.renderTemplate(req, res);
 			});
