@@ -4,7 +4,7 @@ import { PROD } from "../../../../utilities";
 
 class Template extends React.Component {
 	render() {
-		const { title, assets, route } = this.props;
+		const { title, assets, children } = this.props;
 
 		return (
 			<html>
@@ -18,7 +18,7 @@ class Template extends React.Component {
 				<body>
 					<h1>Server render</h1>
 					<div id="App">
-						{route}
+						{children}
 					</div>
 					<script src={assets.vendor.js}></script>
 					<script src={assets.utils.js}></script>

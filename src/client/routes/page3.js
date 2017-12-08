@@ -2,7 +2,7 @@ import React from "react";
 
 const Component = () => (
 	<div>
-		{"PAGE 1"}
+		{"PAGE 3"}
 	</div>
 );
 

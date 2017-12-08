@@ -13,13 +13,11 @@ import { renderTemplateStatic } from "../src/server/src/ssr/render";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const prerenderedApp = renderTemplateStatic("/");
-
 const mainEntry = ["./src/client/index.js"]
 	.concat(PROD ? [] : ["webpack-hot-middleware/client"]);
 
 const entry = {
-	vendor: ["react", "react-dom"],
+	vendor: ["react", "react-dom", "redux", "react-redux"],
 	utils: ["./src/client/utils/index.js"],
 	main: mainEntry
 };
@@ -55,7 +53,7 @@ const plugins = [
 		new HtmlWebpackPlugin({
 			title: "Static Rendered Page",
 			filename: "index.html",
-			app: prerenderedApp,
+			app: renderTemplateStatic("/"),
 			template: "./src/server/static-render/template.ejs"
 		})
 	] : []);

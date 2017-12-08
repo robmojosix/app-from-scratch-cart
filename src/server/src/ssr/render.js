@@ -7,14 +7,22 @@ import StaticRouter from "react-router-dom/StaticRouter";
 import { renderRoutes } from "react-router-config";
 import routes from "../../../client/routes";
 
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducers from "../../../client/redux/reducers";
+
 const assetsFile = path.resolve("build", "manifest.json");
 
 const staticRouter = (req, routes) => {
+	let store = createStore(reducers);
 	let context = {};
+
 	return (
-		<StaticRouter location={req.url} context={context}>
-			{ renderRoutes(routes) }
-		</StaticRouter>
+		<Provider store={store}>
+			<StaticRouter location={req.url} context={context}>
+				{ renderRoutes(routes) }
+			</StaticRouter>
+		</Provider>
 	);
 };
 
@@ -23,12 +31,12 @@ const renderTemplateHtml = (req) => {
 	const Template = require("./template.js").default;
 	const manifest = require(assetsFile);
 
+	const Content = staticRouter(req, routes);
+
 	return renderToString(
-		<Template
-			title='title'
-			route={staticRouter(req, routes)}
-			assets={manifest}
-		/>
+		<Template title='title' assets={manifest} >
+			{Content}
+		</Template>
 	);
 };
 
