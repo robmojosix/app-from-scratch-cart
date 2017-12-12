@@ -12,10 +12,15 @@ import routes from "./routes";
 
 // add redux
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import reducers from "./redux/reducers";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(reducers, window.__INITIAL_STATE__, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(
+	reducers,
+	window.__INITIAL_STATE__,
+	composeWithDevTools(applyMiddleware(...[])) // add middlewares to this guy
+);
 
 const App = () => (
 	<Provider store={store}>

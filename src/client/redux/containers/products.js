@@ -1,27 +1,24 @@
 import { connect } from "react-redux";
 import * as actions from "../actions";
-import counter from "../../routes/page1";
+import { Products } from "../../components";
 
 const mapStateToProps = (state) => {
 	return {
-		total: state.counter.total
+		products: state.products
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		plus: () => {
-			dispatch(actions.plus());
-		},
-		minus: () => {
-			dispatch(actions.minus());
+		addToCart: (id) => {
+			dispatch(actions.addToCart(id));
 		}
 	};
 };
 
-const Counter = connect(
+const container = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(counter);
+)(Products);
 
-export default Counter;
+export default container;

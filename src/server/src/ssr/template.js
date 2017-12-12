@@ -4,8 +4,7 @@ import { PROD } from "../../../../utilities";
 
 class Template extends React.Component {
 	render() {
-		const { title, assets, children } = this.props;
-
+		const { title, assets, children, rehydrateState } = this.props;
 		return (
 			<html>
 				<head>
@@ -20,6 +19,7 @@ class Template extends React.Component {
 					<div id="App">
 						{children}
 					</div>
+					<script dangerouslySetInnerHTML={{__html: rehydrateState}} />
 					<script src={assets.vendor.js}></script>
 					<script src={assets.utils.js}></script>
 					<script src={assets.main.js}></script>
