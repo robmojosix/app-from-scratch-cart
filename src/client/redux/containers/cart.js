@@ -4,9 +4,9 @@ import { Cart } from "../../components";
 import { lookUpProductById } from "../reducers";
 
 const mapProductsAndQuanitity = (state) => (
-	state.cart.map((item) => {
+	state.cart.products.map((item) => {
 		return {
-			...lookUpProductById(state, item.id),
+			...lookUpProductById(state.products, item.id),
 			quantity: item.quantity
 		};
 	})
@@ -14,17 +14,18 @@ const mapProductsAndQuanitity = (state) => (
 
 const mapStateToProps = (state) => {
 	return {
-		products: mapProductsAndQuanitity(state)
+		products: mapProductsAndQuanitity(state),
+		total: state.cart.total
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		increaseQuantity: (id) => {
-			dispatch(actions.increaseQuantity(id));
+			dispatch(actions.increaseQuantityHandler(id));
 		},
 		decreaseQuantity: (id) => {
-			dispatch(actions.decreaseQuantity(id));
+			dispatch(actions.decreaseQuantityHandler(id));
 		}
 	};
 };

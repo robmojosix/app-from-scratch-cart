@@ -14,12 +14,13 @@ import routes from "./routes";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reducers from "./redux/reducers";
+import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = createStore(
 	reducers,
 	window.__INITIAL_STATE__,
-	composeWithDevTools(applyMiddleware(...[])) // add middlewares to this guy
+	composeWithDevTools(applyMiddleware(thunk)) // add middlewares to this guy
 );
 
 const App = () => (

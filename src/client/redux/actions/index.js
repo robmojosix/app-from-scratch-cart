@@ -1,5 +1,24 @@
 import * as actionTypes from "./types";
 
+export const decreaseQuantityHandler = (id) => {
+	return (dispatch, getState) => {
+		dispatch(decreaseQuantity(id));
+
+		const {products, cart} = getState();
+		dispatch(calculateTotal(products, cart.products));
+	};
+};
+
+export const increaseQuantityHandler = (id) => {
+	return (dispatch, getState) => {
+		dispatch(increaseQuantity(id));
+		
+		const {products, cart} = getState();
+		dispatch(calculateTotal(products, cart.products));
+	};
+};
+
+
 export const increaseQuantity = (id) => {
 	return {
 		type: actionTypes.INCREASE_QUANTITY,
@@ -39,10 +58,27 @@ export const productsReceived = () => (
 	}
 );
 
+export const calculateTotal = (products, cartProducts) => {
+	return {
+		type: actionTypes.CALCULATE_TOTAL,
+		productDirectory: products,
+		cartProducts
+	};
+};
+
 // to be used when we introduce async call
 // export const getProductData = () => (dispatch) => {
 //   dispatch(productsReceived(products));
 // }
+
+export const addToCartHandler = (id) => {
+	return (dispatch, getState) => {
+		dispatch(addToCart(id));
+
+		const { products, cart } = getState();
+		dispatch(calculateTotal(products, cart.products));
+	};
+};
 
 export const addToCart = (id) => (
 	{

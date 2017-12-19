@@ -9,6 +9,7 @@ import routes from "../../../client/routes";
 
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 import reducers from "../../../client/redux/reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 
@@ -17,7 +18,7 @@ const assetsFile = path.resolve("build", "manifest.json");
 const store = createStore(
 	reducers,
 	{},
-	composeWithDevTools(applyMiddleware(...[])) // add middlewares to this guy
+	composeWithDevTools(applyMiddleware(thunk)) // add middlewares to this guy
 );
 
 const staticRouter = (url, routes, store) => {

@@ -1,33 +1,39 @@
 import React from "react";
-import { array, func } from "prop-types";
+import { CartItem } from "../";
+import { array, func, number } from "prop-types";
 
 const displayName = "Cart";
 
 const defaultProps = {
 	products: [],
+	total: 0,
 	increaseQuantity: null,
 	decreaseQuantity: null,
 };
 
 const propTypes = {
 	products: array.isRequired,
+	total: number.isRequired,
 	increaseQuantity: func.isRequired,
 	decreaseQuantity: func.isRequired,
 };
 
-const component = ({ products, increaseQuantity, decreaseQuantity }) => (
+const component = ({ total, products, increaseQuantity, decreaseQuantity }) => (
 	<div>
 		{
 			products.map((item, i) => (
-				<div key={i} >
-					<h3>{item.title}</h3>
-					<p>{item.price}</p>
-					<p>quantity {item.quantity}</p>
-					<button onClick={ () => increaseQuantity(item.id) }>+</button>
-					<button onClick={ () => decreaseQuantity(item.id) }>-</button>
-				</div>
+				<CartItem
+					key={i}
+					id={item.id}
+					title={item.title}
+					price={item.price}
+					quantity={item.quantity}
+					increaseQuantity={increaseQuantity}
+					decreaseQuantity={decreaseQuantity}
+				/>
 			))
 		}
+		<h1>${total}</h1>
 	</div>
 );
 
