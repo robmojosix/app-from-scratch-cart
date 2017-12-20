@@ -1,3 +1,4 @@
+import {bindActionCreators} from "redux";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import { Cart } from "../../components";
@@ -19,16 +20,11 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		increaseQuantity: (id) => {
-			dispatch(actions.increaseQuantityHandler(id));
-		},
-		decreaseQuantity: (id) => {
-			dispatch(actions.decreaseQuantityHandler(id));
-		}
-	};
-};
+const mapDispatchToProps = (dispatch) =>
+	bindActionCreators({
+		increaseQuantity: actions.increaseQuantityHandler,
+		decreaseQuantity: actions.decreaseQuantityHandler
+	}, dispatch);
 
 const container = connect(
 	mapStateToProps,
