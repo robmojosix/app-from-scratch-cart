@@ -6,9 +6,11 @@ Enzyme.configure({ adapter: new Adapter() });
 import chaiEnzyme from "chai-enzyme";
 import sinonChai from "sinon-chai";
 import chai from "chai";
+import sinonChaiInOrder from "sinon-chai-in-order";
 
 chai.use(chaiEnzyme());
 chai.use(sinonChai);
+chai.use(sinonChaiInOrder);
 
 // Stubs for client
 // ---

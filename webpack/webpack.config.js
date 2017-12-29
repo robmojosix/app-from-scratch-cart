@@ -50,11 +50,13 @@ const plugins = [
 		new webpack.HotModuleReplacementPlugin()
 	])
 	.concat(PRERENDER ? [
-		new HtmlWebpackPlugin({
-			title: "Static Rendered Page",
-			filename: "index.html",
-			app: renderTemplateStatic("/"),
-			template: "./src/server/static-render/template.ejs"
+		renderTemplateStatic("/").then((html) => {
+			new HtmlWebpackPlugin({
+				title: "Static Rendered Page",
+				filename: "index.html",
+				app: html,
+				template: "./src/server/static-render/template.ejs"
+			});
 		})
 	] : []);
 

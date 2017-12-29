@@ -1,10 +1,10 @@
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import { Cart } from "../../components";
-import { lookUpProductById } from "../reducers";
+import { lookUpProductById } from "../utils";
 
-const mapProductsAndQuanitity = (state) => (
+const mapProductsAndQuantity = (state) => (
 	state.cart.products.map((item) => {
 		return {
 			...lookUpProductById(state.products, item.id),
@@ -13,14 +13,14 @@ const mapProductsAndQuanitity = (state) => (
 	})
 );
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
 	return {
-		products: mapProductsAndQuanitity(state),
+		products: mapProductsAndQuantity(state),
 		total: state.cart.total
 	};
 };
 
-const mapDispatchToProps = (dispatch) =>
+export const mapDispatchToProps = (dispatch) =>
 	bindActionCreators({
 		increaseQuantity: actions.increaseQuantityHandler,
 		decreaseQuantity: actions.decreaseQuantityHandler
